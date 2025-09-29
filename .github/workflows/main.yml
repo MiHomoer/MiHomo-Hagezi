@@ -44,6 +44,8 @@ jobs:
 
       - name: Delete temp files
         run: |
+          mv HageziProPlus.txt release/
+          mv HageziProPlus.mrs release/
           rm TempProPlusNew.txt
           rm TempProPlus.txt
           rm mihomo
