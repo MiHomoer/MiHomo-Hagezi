@@ -28,12 +28,9 @@ jobs:
           echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
           echo "RELEASE_DATE=$(date +'%A %F %T %Z')" >> $GITHUB_ENV
 
-      - name: Create release directory
-        run: mkdir release
-
       - name: Generate clash mrs rules
         run: |
-          rm mihomo
+          rm -Rf release
           MIHOMO_URL=$(curl -s -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | test("mihomo-linux-amd64-v.*\\.gz$")) | .browser_download_url' | head -n 1)
           curl -sSLf "$MIHOMO_URL" -o mihomo.gz
           gunzip mihomo.gz
@@ -45,8 +42,6 @@ jobs:
 
       - name: Delete temp files
         run: |
-          mv HageziProPlus.txt release/
-          mv HageziProPlus.mrs release/
           rm TempProPlusNew.txt
           rm TempProPlus.txt
           rm mihomo
