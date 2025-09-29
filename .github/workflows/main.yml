@@ -42,6 +42,12 @@ jobs:
           sed 's/^/+./' TempProPlusNew.txt > HageziProPlus.txt
           ./mihomo convert-ruleset domain text HageziProPlus.txt HageziProPlus.mrs
 
+      - name: Delete temp files
+        run: |
+          rm TempProPlusNew.txt
+          rm TempProPlus.txt
+          rm mihomo
+
       - name: Generate Release Notes
         run: |
           echo "* Updated on ${{ env.RELEASE_DATE }}" > RELEASE_NOTES
@@ -49,7 +55,7 @@ jobs:
       - name: Commit and Push Changes
         uses: EndBug/add-and-commit@v9
         with:
-          message: 'Generating .mrs rule-sets ${{ env.DATE }}'
+          message: 'Generating MiHomo-Hagezi RuleSets ${{ env.RELEASE_DATE }}'
           push: true
           cwd: .
           default_author: github_actions
