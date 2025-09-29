@@ -43,40 +43,12 @@ jobs:
         run: |
           echo "* Updated on ${{ env.RELEASE_DATE }}" > RELEASE_NOTES
 
-      - name: Push assets to release branch
-        if: ${{ !inputs.PRE_RELEASE }}
-        run: |
-          cd release || exit 1
-          git init
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b release
-          git add .
-          git commit -m "${{ env.RELEASE_NAME }}"
-          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
-          git push -f origin release
-
-      - name: Purge jsDelivr CDN
-        if: ${{ !inputs.PRE_RELEASE }}
-        run: |
-          cd release || exit 1
-          for file in $(ls); do
-            curl -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/${file}"
-          done
-
-      - name: Release and upload assets
-        uses: softprops/action-gh-release@v2
+      - name: Commit and Push Changes
+        uses: EndBug/add-and-commit@v9
         with:
-          name: ${{ env.RELEASE_NAME }}
-          tag_name: ${{ env.TAG_NAME }}
-          body_path: RELEASE_NOTES
-          draft: false
-          prerelease: ${{ inputs.PRE_RELEASE }}
-          files: ./release/*
-
-      - name: Clean older releases
-        if: ${{ !inputs.PRE_RELEASE }}
-        uses: dev-drprasad/delete-older-releases@v0.3.4
-        with:
-          keep_latest: 7
-          delete_tags: true
+          message: 'Generating .mrs rule-sets ${{ env.DATE }}'
+          push: true
+          cwd: .
+          default_author: github_actions
+          fetch: --tags --force
+          pathspec_error_handling: ignore
