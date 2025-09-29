@@ -56,11 +56,11 @@ jobs:
           echo "* Updated on ${{ env.RELEASE_DATE }}" > RELEASE_NOTES
 
       - name: Commit and Push Changes
-        uses: EndBug/add-and-commit@v9
-        with:
-          message: 'Generating MiHomo-Hagezi RuleSets ${{ env.RELEASE_DATE }}'
-          push: true
-          cwd: .
-          default_author: github_actions
-          fetch: --tags --force
-          pathspec_error_handling: ignore
+          git init
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b release
+          git add .
+          git commit -m "${{ env.RELEASE_NAME }}"
+          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+          git push -f origin release
