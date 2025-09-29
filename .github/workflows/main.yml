@@ -36,7 +36,6 @@ jobs:
 
       - name: Generate clash mrs rules
         run: |
-          rm -Rf release/
           MIHOMO_URL=$(curl -s -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | test("mihomo-linux-amd64-v.*\\.gz$")) | .browser_download_url' | head -n 1)
           curl -sSLf "$MIHOMO_URL" -o mihomo.gz
           gunzip mihomo.gz
