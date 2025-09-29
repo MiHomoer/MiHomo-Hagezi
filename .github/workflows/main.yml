@@ -10,6 +10,11 @@ on:
         default: false
   schedule:
     - cron: "50 5 * * *"
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - "**/README.md"
 
 permissions:
   contents: write
@@ -27,10 +32,11 @@ jobs:
           echo "RELEASE_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
           echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
           echo "RELEASE_DATE=$(date +'%A %F %T %Z')" >> $GITHUB_ENV
+        shell: bash
 
       - name: Generate clash mrs rules
         run: |
-          rm -Rf release
+          rm -Rf release/
           MIHOMO_URL=$(curl -s -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | test("mihomo-linux-amd64-v.*\\.gz$")) | .browser_download_url' | head -n 1)
           curl -sSLf "$MIHOMO_URL" -o mihomo.gz
           gunzip mihomo.gz
@@ -46,12 +52,24 @@ jobs:
           rm TempProPlus.txt
           rm mihomo
 
-      - name: Generate Release Notes
+      - name: Move files to publish directory
         run: |
-          echo "* Updated on ${{ env.RELEASE_DATE }}" > RELEASE_NOTES
+          mkdir -p publish
+          cp *.txt ./publish/
+          cp *.mrs ./publish/
 
-      - name: Commit and Push Changes
+      - name: Release and upload assets
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ env.RELEASE_NAME }}
+          tag_name: ${{ env.TAG_NAME }}
+          draft: false
+          prerelease: false
+          files: |
+            ./publish/*
+      - name: Git push assets to "release" branch
         run: |
+          cd publish || exit 1
           git init
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -60,3 +78,10 @@ jobs:
           git commit -m "${{ env.RELEASE_NAME }}"
           git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
           git push -f origin release
+
+      - name: Purge jsdelivr CDN
+        run: |
+          cd publish || exit 1
+          for file in $(ls); do
+            curl -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/${file}"
+          done
