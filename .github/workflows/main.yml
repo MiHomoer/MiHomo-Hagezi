@@ -1,4 +1,4 @@
-name: Generate clash rules files
+name: Generate MiHomo-Hagezi RuleSets
 
 on:
   workflow_dispatch:
