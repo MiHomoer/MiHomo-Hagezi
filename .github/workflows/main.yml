@@ -28,21 +28,16 @@ jobs:
       - name: Create release directory
         run: mkdir release
 
-      - name: Generate clash text rules
-        run: |
-          gh api https://api.github.com/repos/hagezi/dns-blocklists/contents/wildcard/pro.plus-onlydomains.txt -H "Accept: application/vnd.github.raw" >> TempProPlus.txt
-          grep -v '^#' TempProPlus.txt > TempProPlusNew.txt
-          sed 's/^/+./' TempProPlusNew.txt > HageziProPlus.txt
-          
-
       - name: Generate clash mrs rules
         run: |
-          gh release download -p "mihomo-linux-amd64-v3-v*.gz" --repo MetaCubeX/mihomo --output mihomo-linux-amd64-v3.gz
-          gzip -Nd ./mihomo-linux-amd64-v3.gz
-          chmod +x ./mihomo-linux-amd64-v3
-          ./mihomo-linux-amd64-v3 convert-ruleset domain text HageziProPlus.txt HageziProPlus.mrs
-        env:
-          GH_TOKEN: ${{ github.token }}
+          MIHOMO_URL=$(curl -s -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | test("mihomo-linux-amd64-v.*\\.gz$")) | .browser_download_url' | head -n 1)
+          curl -sSLf "$MIHOMO_URL" -o mihomo.gz
+          gunzip mihomo.gz
+          chmod +x mihomo
+          curl -sSLf https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.plus-onlydomains.txt -o TempProPlus.txt
+          grep -v '^#' TempProPlus.txt > TempProPlusNew.txt
+          sed 's/^/+./' TempProPlusNew.txt > HageziProPlus.txt
+          ./mihomo convert-ruleset domain text HageziProPlus.txt HageziProPlus.mrs
 
       - name: Generate Release Notes
         run: |
@@ -78,8 +73,6 @@ jobs:
           draft: false
           prerelease: ${{ inputs.PRE_RELEASE }}
           files: ./release/*
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Clean older releases
         if: ${{ !inputs.PRE_RELEASE }}
