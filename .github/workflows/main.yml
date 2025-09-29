@@ -40,8 +40,6 @@ jobs:
           gzip -Nd ./mihomo-linux-amd64-v3.gz
           chmod +x ./mihomo-linux-amd64-v3
           ./mihomo-linux-amd64-v3 convert-ruleset domain text HageziProPlus.txt HageziProPlus.mrs
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate Release Notes
         run: |
@@ -86,5 +84,3 @@ jobs:
         with:
           keep_latest: 7
           delete_tags: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
