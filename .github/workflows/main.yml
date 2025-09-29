@@ -30,13 +30,16 @@ jobs:
 
       - name: Generate clash text rules
         run: |
-          chmod +x ./scripts/generate-clash-text-rules.sh
-          ./scripts/generate-clash-text-rules.sh
+          gh api https://api.github.com/repos/hagezi/dns-blocklists/contents/wildcard/pro.plus-onlydomains.txt -H "Accept: application/vnd.github.raw" >> TempProPlus.txt
+          grep -v '^#' TempProPlus.txt > TempProPlusNew.txt
+          sed 's/^/+./' TempProPlusNew.txt > HageziProPlus.txt
 
       - name: Generate clash mrs rules
         run: |
-          chmod +x ./scripts/generate-clash-mrs-rules.sh
-          ./scripts/generate-clash-mrs-rules.sh
+          gh release download -p "mihomo-linux-amd64-v3-v*.gz" --repo MetaCubeX/mihomo --output mihomo-linux-amd64-v3.gz
+          gzip -Nd ./mihomo-linux-amd64-v3.gz
+          chmod +x ./mihomo-linux-amd64-v3
+          ./mihomo-linux-amd64-v3 convert-ruleset domain text HageziProPlus.txt HageziProPlus.mrs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
