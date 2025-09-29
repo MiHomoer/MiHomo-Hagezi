@@ -56,6 +56,7 @@ jobs:
           echo "* Updated on ${{ env.RELEASE_DATE }}" > RELEASE_NOTES
 
       - name: Commit and Push Changes
+        run: |
           git init
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
