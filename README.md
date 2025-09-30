@@ -6,6 +6,8 @@ If you like the project and you can benefit from it, leave a :star: (top right) 
 
 # :computer: Usage
 
+Add appropriate changes to your yaml file
+
 ```
   nameserver-policy:
     'rule-set:HageziProPlus': 'rcode://success'
@@ -36,4 +38,4 @@ All rights are reserved for All upstream sources used in this project according 
 This repository is not affiliated, associated, authorized, endorsed by, or in any way officially connected to any of the aforementioned resources, websites, services, or any entity which this may concern, in any way.  
 The data in this repository is gathered from publicly available resources and is provided as-is, intended for informational purposes only with no guarantee of accuracy, liability or availability and We are not responsible for any harm or damage that may arise from using the data in this repository. Please do your research before using any data from this repository.
 
-# :pray: Special Thanks
+# :pray: Thanks
