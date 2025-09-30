@@ -6,7 +6,7 @@ If you like the project and you can benefit from it, leave a :star: (top right) 
 
 # :computer: Usage
 
-Add appropriate changes to your yaml file. You can choose HageziUltimate, HageziProPlus or HageziPro.
+Add appropriate changes to your yaml file. You can choose one from HageziUltimate, HageziProPlus, or HageziPro.
 
 ```
 dns:
