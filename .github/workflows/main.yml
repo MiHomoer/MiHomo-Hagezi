@@ -1,13 +1,6 @@
 name: Generate MiHomo-Hagezi RuleSets
-
 on:
   workflow_dispatch:
-    inputs:
-      PRE_RELEASE:
-        description: "Set as pre-release"
-        required: false
-        type: boolean
-        default: false
   schedule:
     - cron: "50 5 * * *"
   push:
@@ -15,14 +8,11 @@ on:
       - master
     paths-ignore:
       - "**/README.md"
-
 permissions:
   contents: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -34,7 +24,7 @@ jobs:
           echo "RELEASE_DATE=$(date +'%A %F %T %Z')" >> $GITHUB_ENV
         shell: bash
 
-      - name: Generate clash mrs rules
+      - name: Generate MiHomo mrs rules
         run: |
           MIHOMO_URL=$(curl -s -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | test("mihomo-linux-amd64-v.*\\.gz$")) | .browser_download_url' | head -n 1)
           curl -sSLf "$MIHOMO_URL" -o mihomo.gz
