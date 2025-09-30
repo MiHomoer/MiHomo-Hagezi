@@ -40,13 +40,19 @@ jobs:
           curl -sSLf "$MIHOMO_URL" -o mihomo.gz
           gunzip mihomo.gz
           chmod +x mihomo
+          curl -sSLf https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/ultimate-onlydomains.txt -o TempUltimate.txt
           curl -sSLf https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.plus-onlydomains.txt -o TempProPlus.txt
+          grep -v '^#' TempUltimate.txt > TempUltimateNew.txt
+          sed 's/^/+./' TempUltimateNew.txt > HageziUltimate.txt
           grep -v '^#' TempProPlus.txt > TempProPlusNew.txt
           sed 's/^/+./' TempProPlusNew.txt > HageziProPlus.txt
+          ./mihomo convert-ruleset domain text HageziUltimate.txt HageziUltimate.mrs
           ./mihomo convert-ruleset domain text HageziProPlus.txt HageziProPlus.mrs
 
       - name: Delete temp files
         run: |
+          rm TempUltimateNew.txt
+          rm TempUltimate.txt
           rm TempProPlusNew.txt
           rm TempProPlus.txt
           rm mihomo
