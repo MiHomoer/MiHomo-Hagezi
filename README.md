@@ -1,4 +1,4 @@
-# :zap: Introduction
+# Introduction
 
 Hagezi's Lists converted for MiHomo
 
