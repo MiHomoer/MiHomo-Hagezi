@@ -1,7 +1,26 @@
 # MiHomo-Hagezi
 MiHomo Hagezi RuleSets
 
+# :writing_hand: Introduction
+
+
+
 # :computer: Usage
+
+  nameserver-policy:
+    'rule-set:HageziProPlus': 'rcode://success'
+
+rule-providers:
+  HageziProPlus:
+    type: http
+    format: mrs
+    behavior: domain
+    url: "https://fastly.jsdelivr.net/gh/MiHomoer/MiHomo-Hagezi@release/HageziProPlus.mrs"
+    path: ./HageziProPlus.mrs
+    interval: 86400
+
+rules:
+  - RULE-SET,HageziProPlus,REJECT,no-resolve
 
 # :copyright: License
 
