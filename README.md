@@ -6,9 +6,11 @@ If you like the project and you can benefit from it, leave a :star: (top right) 
 
 # :computer: Usage
 
-Add appropriate changes to your yaml file
+Add appropriate changes to your yaml file. You can choose HageziUltimate, HageziProPlus or HageziPro.
 
 ```
+dns:
+  enable: true
   nameserver-policy:
     'rule-set:HageziProPlus': 'rcode://success'
 
@@ -17,7 +19,7 @@ rule-providers:
     type: http
     format: mrs
     behavior: domain
-    url: "https://fastly.jsdelivr.net/gh/MiHomoer/MiHomo-Hagezi@release/HageziProPlus.mrs"
+    url: "https://cdn.jsdelivr.net/gh/MiHomoer/MiHomo-Hagezi@release/HageziProPlus.mrs"
     path: ./HageziProPlus.mrs
     interval: 86400
 
