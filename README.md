@@ -7,6 +7,7 @@ MiHomo Hagezi RuleSets
 
 # :computer: Usage
 
+```
   nameserver-policy:
     'rule-set:HageziProPlus': 'rcode://success'
 
@@ -21,6 +22,7 @@ rule-providers:
 
 rules:
   - RULE-SET,HageziProPlus,REJECT,no-resolve
+```
 
 # :copyright: License
 
