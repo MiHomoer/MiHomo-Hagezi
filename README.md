@@ -1,9 +1,8 @@
-# MiHomo-Hagezi
-MiHomo Hagezi RuleSets
+# :zap: Introduction
 
-# :writing_hand: Introduction
+Hagezi's Lists converted for MiHomo
 
-
+If you like the project and you can benefit from it, leave a :star: (top right) and become a [stargazer](https://github.com/MiHomoer/MiHomo-Hagezi/stargazers)! Thanks for your support!
 
 # :computer: Usage
 
