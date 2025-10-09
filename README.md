@@ -27,6 +27,8 @@ rules:
   - RULE-SET,HageziProPlus,REJECT,no-resolve
 ```
 
+By using Sniffer you may also block requests from private dns.
+
 ```
 sniffer:
   enable: true
