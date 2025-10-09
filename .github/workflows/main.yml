@@ -2,7 +2,7 @@ name: Generate MiHomo-Hagezi RuleSets
 on:
   workflow_dispatch:
   schedule:
-    - cron: "50 5 * * *"
+    - cron: "0 22 * * *"
   push:
     branches:
       - master
