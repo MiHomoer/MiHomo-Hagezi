@@ -1,6 +1,6 @@
 # Introduction
 
-Hagezi's Lists are converted to MiHomo mrs format.
+Hagezi's Lists are converted to MiHomo mrs format. All lists are rebuilt and deployed from their original sources every day.
 
 If you like the project and you can benefit from it, leave a :star: (top right) and become a [stargazer](https://github.com/MiHomoer/MiHomo-Hagezi/stargazers)! Thanks for your support!
 
